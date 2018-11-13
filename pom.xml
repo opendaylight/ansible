@@ -29,7 +29,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
         <module>config</module>
         <module>features</module>
         <module>karaf</module>
-        <module>model</module>
         <module>northbound</module>
         <module>southbound</module>
     </modules>

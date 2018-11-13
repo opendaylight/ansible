@@ -23,23 +23,23 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
 
     <dependencies>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.7</version>
-        </dependency>
-        <dependency>
-            <groupId>org.opendaylight.ansible.model</groupId>
-            <artifactId>ietf-l3vpn-svc</artifactId>
-            <version>2017-05-02.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
             <groupId>org.opendaylight.genius</groupId>
             <artifactId>mdsalutil-api</artifactId>
             <version>${genius.version}</version>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.mdsal.model</groupId>
-            <artifactId>ietf-topology</artifactId>
+            <artifactId>ietf-yang-types-20130715</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.ops4j.pax.cdi</groupId>
+            <artifactId>pax-cdi-api</artifactId>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 
@@ -52,9 +52,8 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                 <configuration>
                     <instructions>
                         <Export-Package>
-                            org.opendaylight.ansible.northbound.api,
-                            org.opendaylight.yang.gen.v1.urn.opendaylight.ansible.*,
-                            org.opendaylight.yang.gen.v1.urn.tbd.params.xml.ns.yang.network.topology.aug.*
+                            org.opendaylight.ansible.northbound.api.*,
+                            org.opendaylight.yang.gen.v1.urn.opendaylight.ansible.*
                         </Export-Package>
                     </instructions>
                 </configuration>

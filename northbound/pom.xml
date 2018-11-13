@@ -25,7 +25,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
 
     <modules>
         <module>api</module>
-        <module>impl</module>
     </modules>
 
     <!-- DO NOT install or deploy the pom as it's only needed to initiate a build -->
@@ -47,4 +46,5 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             </plugin>
         </plugins>
     </build>
+
 </project>
