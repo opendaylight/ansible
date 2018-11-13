@@ -1,0 +1,99 @@
+module ansible-command {
+    yang-version 1;
+    namespace "urn:opendaylight:ansible:command";
+    prefix "ansible-command";
+
+    description "Ansible command api.";
+
+    revision "2018-08-21" {
+        description "Initial revision.";
+    }
+
+    import ietf-yang-types {
+        prefix yang;
+    }
+
+    typedef status {
+        description "A type describing the status of L3VPN processing by provider.";
+        type enumeration {
+            enum in-progress {
+                value 0;
+                description "Ansible Command is in progress.";
+            }
+            enum complete {
+                value 1;
+                description "Ansible completed successfully.";
+            }
+            enum failed {
+                value -1;
+                description "Ansible command failed";
+            }
+        }
+    }
+
+    grouping ansible-command-input {
+        leaf host {
+            description "IP/hostname to execute command on";
+            type string;
+        }
+        leaf directory {
+            description "path to execute";
+            type string;
+        }
+        leaf-list ansible-vars {
+            description "extra variables to pass to ansible in a key=value format";
+            type string;
+        }
+
+    }
+
+    grouping ansible-command-output {
+        leaf uuid {
+            type yang:uuid;
+            description "Unique identifier of the Ansible Command";
+        }
+        leaf status {
+            type status;
+        }
+        leaf failed-event {
+            type string;
+        }
+    }
+
+    rpc run-ansible-command {
+        description "Run ansible commands.";
+        input {
+            uses ansible-command-input;
+            choice command-type {
+                case playbook {
+                    leaf file {
+                        description "playbook to execute";
+                        type string;
+                    }
+                }
+                case role {
+                    leaf role-name {
+                        description "role to execute";
+                        type string;
+                    }
+                    leaf-list role-vars {
+                        description "variables to pass into the role written in key=value format";
+                        type string;
+                    }
+                }
+            }
+        }
+        output {
+            uses ansible-command-output;
+        }
+    }
+
+    container commands {
+        list command {
+            description "Ansible command";
+            key "uuid";
+            uses ansible-command-output;
+        }
+    }
+
+}

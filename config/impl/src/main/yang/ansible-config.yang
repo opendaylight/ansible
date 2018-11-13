@@ -1,0 +1,29 @@
+module ansible-config {
+    yang-version 1;
+    namespace "urn:opendaylight:ansible:config";
+    prefix "ansible-config";
+
+    import ietf-yang-types { prefix yang; }
+
+    description "This YANG module defines ansible configuration.";
+
+    revision "2018-08-21" {
+        description "Initial revision.";
+    }
+
+    /* conf parameters for interfacemanager */
+    container ansible-config {
+        config true;
+        leaf ansible-runner-name {
+           type string;
+           default "ansible-runner";
+           description "Name of the ansible runner executable";
+        }
+
+        leaf ansible-runner-path {
+           type string;
+           default ".";
+           description "Path to the ansible runner executable";
+        }
+    }
+}
