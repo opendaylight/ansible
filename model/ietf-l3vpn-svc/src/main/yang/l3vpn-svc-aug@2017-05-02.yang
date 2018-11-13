@@ -1,0 +1,183 @@
+module l3vpn-svc-aug {
+  namespace "urn:ietf:params:xml:ns:yang:l3vpn-svc-aug";
+
+  prefix l3vpn-svc-aug;
+
+  import yang-ext {
+    prefix ext;
+    revision-date "2013-07-09";
+  }
+
+  import ietf-inet-types {
+    prefix inet;
+    revision-date 2013-07-15;
+  }
+
+  import ietf-yang-types {
+    prefix yang;
+    revision-date 2013-07-15;
+  }
+
+  import ietf-l3vpn-svc {
+    prefix l3vpn;
+    revision-date 2017-05-02;
+  }
+
+  import network-topology {
+    prefix nt;
+    revision-date 2013-10-21;
+  }
+
+  organization
+    "Frinx s.r.o.";
+
+  contact
+    "<mailto:msunal@frinx.io>";
+
+  description
+    "This YANG module defines additional L3VPN fields to ietf-l3vpn-svc.
+    This model is common across all vendor implementations.";
+
+  revision 2017-05-02 {
+    description
+        "Initial document.";
+  }
+
+  typedef vrf-name {
+    type string {
+      pattern "[\w\-\.:,_@#%$\+=\|;]+";
+      length "0..32";
+    }
+    description "Special characters are not allowed.";
+  }
+
+  grouping route-target-fields {
+    description
+        "Common node of import-route-targets, export-route-targets";
+    container route-target {
+      // TODO add "when" for any-to-any vpn topology
+      description "Route target";
+      leaf as {
+        type uint32;
+        description "AS number";
+      }
+      leaf as-index {
+        type uint32;
+        description "AS number Index";
+      }
+    }
+  }
+
+  grouping route-distinguisher-fields {
+    description "Common node of route-distinguisher";
+    container route-distinguisher {
+      description "Route distinguisher";
+      leaf as {
+        type uint32;
+        description "AS number";
+      }
+      leaf as-index {
+        type uint32;
+        description "AS number Index";
+      }
+    }
+  }
+
+  grouping vrf-fields {
+    description "VRF assigned for L3VPN";
+    leaf vrf-name {
+      type vrf-name;
+    }
+  }
+
+  grouping vrf-aug {
+    container import-route-targets {
+      description "Import Route targets";
+      uses route-target-fields;
+    }
+
+    container export-route-targets {
+      description "Export Route targets";
+      uses route-target-fields;
+    }
+
+    uses vrf-fields;
+    uses route-distinguisher-fields;
+  }
+
+  grouping pe-aug {
+    leaf pe-node-id {
+      type nt:node-id;
+      description "Provider Edge node-id from network-topology:network-topology/topology/pe/node/<node-id>.";
+    }
+
+    leaf ce-node-id {
+      type nt:node-id;
+      description "Customer Equipment node-id";
+    }
+
+    leaf pe-2-ce-tp-id {
+      type nt:tp-id;
+      description "Termination point on Provider Edge which connects Customer Edge.";
+    }
+
+    leaf pe-bgp-as {
+      type uint32;
+      description "BGP autonomous system number on Provider Edge.";
+    }
+
+    leaf route-policy-in {
+      type string;
+      description "Route policy name to apply to inbound routes.";
+    }
+
+    leaf route-policy-out {
+      type string;
+      description "Route policy name to apply to outbound routes.";
+    }
+  }
+
+  augment "l3vpn:l3vpn-svc/l3vpn:vpn-services/l3vpn:vpn-service" {
+    description "VRF augmentation adds parameters of l3vpn service.";
+    ext:augment-identifier "vrf-augmentation";
+
+    uses vrf-aug;
+  }
+
+  augment "l3vpn:l3vpn-svc/l3vpn:sites/l3vpn:site/l3vpn:site-network-accesses/l3vpn:site-network-access" {
+    description "PE augmentation identifies Provider Edge which connects Customer
+        Edge.";
+    ext:augment-identifier "pe-augmentation";
+
+    uses pe-aug;
+  }
+
+  augment "l3vpn:status-l3vpn-provider/l3vpn:processed-l3vpn-svc/l3vpn:vpn-services/l3vpn:vpn-service" {
+    description "VRF augmentation adds parameters of l3vpn service.";
+    ext:augment-identifier "proc-vrf-augmentation";
+
+    uses vrf-aug;
+  }
+  augment "l3vpn:configured-l3vpn-svc/l3vpn:vpn-services/l3vpn:vpn-service" {
+    description "VRF augmentation adds parameters of l3vpn service.";
+    ext:augment-identifier "conf-vrf-augmentation";
+
+    uses vrf-aug;
+  }
+
+  augment "l3vpn:status-l3vpn-provider/l3vpn:processed-l3vpn-svc/l3vpn:sites/l3vpn:site/l3vpn:site-network-accesses/l3vpn:site-network-access" {
+    description "PE augmentation identifies Provider Edge which connects Customer
+        Edge.";
+    ext:augment-identifier "proc-pe-augmentation";
+
+    uses pe-aug;
+  }
+  augment "l3vpn:configured-l3vpn-svc/l3vpn:sites/l3vpn:site/l3vpn:site-network-accesses/l3vpn:site-network-access" {
+    description "PE augmentation identifies Provider Edge which connects Customer
+        Edge.";
+    ext:augment-identifier "conf-pe-augmentation";
+
+    uses pe-aug;
+  }
+
+}

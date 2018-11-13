@@ -1,0 +1,72 @@
+module network-topology-aug {
+  yang-version 1;
+  namespace "urn:TBD:params:xml:ns:yang:network-topology-aug";
+
+  prefix "network-topology-aug";
+
+  import yang-ext {
+    prefix ext;
+    revision-date "2013-07-09";
+  }
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  import network-topology {
+    prefix nt;
+    revision-date 2013-10-21;
+  }
+
+  organization "TBD";
+
+  contact "WILL-BE-DEFINED-LATER";
+
+  description
+          "This module defines a model for the topology of a network.
+          Key design decisions are as follows:
+          A topology consists of a set of nodes and links.
+          Links are point-to-point and unidirectional.
+          Bidirectional connections need to be represented through
+          two separate links.
+          Multipoint connections, broadcast domains etc can be represented
+          through a hierarchy of nodes, then connecting nodes at
+          upper layers of the hierarchy.";
+
+  revision 2018-10-15 {
+    description
+      "Initial revision.";
+  }
+
+  grouping node-mgmt-attributes {
+    description
+      "Attributes for an ansible node type";
+
+    leaf username {
+        type string;
+        description "login username.";
+    }
+
+    leaf password {
+        type string;
+        description "login password.";
+    }
+
+    leaf device-type {
+        type string;
+        description "The hardware device type.";
+    }
+
+    leaf pe-mgmt-ip {
+        type inet:ipv4-address;
+        description "Address for control plane management of the PE device";
+    }
+  }
+
+  augment "nt:network-topology/nt:topology/nt:node" {
+    description "Augments node with management info";
+    ext:augment-identifier "mgmt-augmentation";
+
+    uses node-mgmt-attributes;
+  }
+}

@@ -1,0 +1,4 @@
+<ansible-config xmlns="urn:opendaylight:ansible:config">
+    <ansible-runner-name>ansible-runner</ansible-runner-name>
+    <ansible-runner-path>.</ansible-runner-path>
+</ansible-config>
