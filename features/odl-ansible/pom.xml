@@ -13,13 +13,13 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <parent>
         <groupId>org.opendaylight.odlparent</groupId>
         <artifactId>single-feature-parent</artifactId>
-        <version>3.1.4</version>
+        <version>4.0.2</version>
         <relativePath/>
     </parent>
 
     <groupId>org.opendaylight.ansible</groupId>
     <artifactId>odl-ansible</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.2.0-SNAPSHOT</version>
     <name>ODL :: ansible :: ${project.artifactId}</name>
     <packaging>feature</packaging>
 
@@ -28,14 +28,14 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <dependency>
                 <groupId>org.opendaylight.controller</groupId>
                 <artifactId>mdsal-artifacts</artifactId>
-                <version>1.8.1-SNAPSHOT</version>
+                <version>1.9.0-SNAPSHOT</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
             <dependency>
-                <groupId>org.opendaylight.mdsal.model</groupId>
-                <artifactId>mdsal-model-artifacts</artifactId>
-                <version>0.13.1-SNAPSHOT</version>
+                <groupId>org.opendaylight.mdsal</groupId>
+                <artifactId>mdsal-artifacts</artifactId>
+                <version>3.0.1</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
@@ -45,11 +45,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>northbound-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>northbound-impl</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -66,14 +61,21 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
         <dependency>
             <groupId>org.opendaylight.genius</groupId>
             <artifactId>odl-genius</artifactId>
-            <version>0.5.1-SNAPSHOT</version>
+            <version>0.6.0-SNAPSHOT</version>
             <type>xml</type>
             <classifier>features</classifier>
         </dependency>
         <dependency>
+            <groupId>org.opendaylight.odlparent</groupId>
+            <artifactId>odl-jackson-2.9</artifactId>
+            <version>4.0.2</version>
+            <classifier>features</classifier>
+            <type>xml</type>
+        </dependency>
+        <dependency>
             <groupId>org.opendaylight.netconf</groupId>
             <artifactId>odl-restconf</artifactId>
-            <version>1.8.1-SNAPSHOT</version>
+            <version>1.9.0-SNAPSHOT</version>
             <type>xml</type>
             <classifier>features</classifier>
         </dependency>

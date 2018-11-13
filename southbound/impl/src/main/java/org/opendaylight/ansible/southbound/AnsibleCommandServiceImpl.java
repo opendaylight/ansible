@@ -25,11 +25,13 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import org.opendaylight.genius.infra.RetryingManagedNewTransactionRunner;
-import org.opendaylight.genius.datastoreutils.SingleTransactionDataBroker;
+import org.apache.aries.blueprint.annotation.service.Reference;
+import org.apache.aries.blueprint.annotation.service.Service;
 import org.opendaylight.controller.md.sal.binding.api.DataBroker;
 import org.opendaylight.controller.md.sal.common.api.data.LogicalDatastoreType;
 import org.opendaylight.controller.md.sal.common.api.data.ReadFailedException;
+import org.opendaylight.genius.datastoreutils.SingleTransactionDataBroker;
+import org.opendaylight.genius.infra.RetryingManagedNewTransactionRunner;
 import org.opendaylight.yang.gen.v1.urn.ietf.params.xml.ns.yang.ietf.yang.types.rev130715.Uuid;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.ansible.command.rev180821.AnsibleCommandService;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.ansible.command.rev180821.Commands;
@@ -45,11 +47,11 @@ import org.opendaylight.yang.gen.v1.urn.opendaylight.ansible.command.rev180821.r
 import org.opendaylight.yangtools.yang.binding.InstanceIdentifier;
 import org.opendaylight.yangtools.yang.common.RpcResult;
 import org.opendaylight.yangtools.yang.common.RpcResultBuilder;
-import org.ops4j.pax.cdi.api.OsgiService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Singleton
+@Service(classes = AnsibleCommandService.class)
 public class AnsibleCommandServiceImpl implements AnsibleCommandService {
     private static final Logger LOG = LoggerFactory.getLogger(AnsibleCommandServiceImpl.class);
     private Map<Uuid, ManagedProcess> processMap = new ConcurrentHashMap<>();
@@ -66,7 +68,7 @@ public class AnsibleCommandServiceImpl implements AnsibleCommandService {
     private static final String DEFAULT_PRIVATE_DIR = "/usr/share/opendaylight-ansible";
 
     @Inject
-    public AnsibleCommandServiceImpl(@OsgiService final DataBroker dataBroker) {
+    public AnsibleCommandServiceImpl(@Reference final DataBroker dataBroker) {
         this.dataBroker = dataBroker;
         txRunner = new RetryingManagedNewTransactionRunner(dataBroker, 3);
     }
@@ -206,10 +208,10 @@ public class AnsibleCommandServiceImpl implements AnsibleCommandService {
                 result = Status.Complete;
             } else {
                 result = Status.Failed;
-                LOG.error("Ansible Failed for " + mp.getProcLongName());
+                LOG.error("Ansible Failed for {}", mp.getProcLongName());
                 AnsibleEvent failedEvent = el.getFailedEvent();
                 if (failedEvent != null) {
-                    LOG.error("Failed Event Output: " + failedEvent.getStdout());
+                    LOG.error("Failed Event Output: {}", failedEvent.getStdout());
                     failedEventOutput = failedEvent.getStdout();
                 } else {
                     LOG.error("Unable to determine failed event");

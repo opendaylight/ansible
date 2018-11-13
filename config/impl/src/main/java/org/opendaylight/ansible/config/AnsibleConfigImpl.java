@@ -10,14 +10,17 @@ package org.opendaylight.ansible.config;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import org.apache.aries.blueprint.annotation.service.Reference;
+import org.apache.aries.blueprint.annotation.service.Service;
 import org.opendaylight.yang.gen.v1.urn.opendaylight.ansible.config.rev180821.AnsibleConfig;
 
 @Singleton
+@Service(classes = org.opendaylight.ansible.config.api.AnsibleConfig.class)
 public class AnsibleConfigImpl implements org.opendaylight.ansible.config.api.AnsibleConfig {
     private final AnsibleConfig ansibleConfig;
 
     @Inject
-    AnsibleConfigImpl(final AnsibleConfig ansibleConfig) {
+    AnsibleConfigImpl(@Reference final AnsibleConfig ansibleConfig) {
         this.ansibleConfig = ansibleConfig;
     }
 

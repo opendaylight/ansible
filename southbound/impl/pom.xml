@@ -13,7 +13,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
     <parent>
         <groupId>org.opendaylight.ansible</groupId>
         <artifactId>binding-parent</artifactId>
-        <version>0.1.0-SNAPSHOT</version>
+        <version>0.2.0-SNAPSHOT</version>
         <relativePath>../../commons/binding-parent</relativePath>
     </parent>
 
@@ -23,9 +23,14 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
 
     <dependencies>
         <dependency>
-            <groupId>commons-net</groupId>
-            <artifactId>commons-net</artifactId>
-            <version>3.0.1</version>
+            <groupId>org.apache.aries.blueprint</groupId>
+            <artifactId>blueprint-maven-plugin-annotation</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>northbound-api</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>ch.vorburger.exec</groupId>
@@ -37,14 +42,13 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <artifactId>jackson-databind</artifactId>
         </dependency>
         <dependency>
-            <groupId>javax.inject</groupId>
-            <artifactId>javax.inject</artifactId>
-            <optional>true</optional>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>3.0.1</version>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>northbound-api</artifactId>
-            <version>${project.version}</version>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.controller</groupId>
@@ -63,11 +67,6 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <groupId>org.opendaylight.serviceutils</groupId>
             <artifactId>tools-api</artifactId>
             <version>${serviceutils.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.ops4j.pax.cdi</groupId>
-            <artifactId>pax-cdi-api</artifactId>
-            <optional>true</optional>
         </dependency>
 
         <dependency>
@@ -103,7 +102,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                     <instructions>
                         <!-- We purposely don't export any packages to avoid any dependencies
                              on this bundle and prevent @Singleton annotated classes from being
-                             accidently included in another bundle's blueprint XML  -->
+                             accidentally included in another bundle's blueprint XML  -->
                         <Export-Package/>
                     </instructions>
                 </configuration>

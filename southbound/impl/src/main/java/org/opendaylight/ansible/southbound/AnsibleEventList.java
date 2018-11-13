@@ -38,7 +38,7 @@ public class AnsibleEventList {
 
     public boolean ansiblePassed() throws AnsibleCommandException {
         ObjectNode lastData = getLastEvent().getEventData();
-        LOG.info("Last event is: " + lastData.toString());
+        LOG.info("Last event is: {}",  lastData.toString());
         if (!lastData.has("failures")) {
             throw new AnsibleCommandException("Unable to parse final Ansible output for failure:"
                     + lastData.toString());
@@ -48,7 +48,7 @@ public class AnsibleEventList {
         if (xn.size() == 0) {
             return true;
         } else {
-            LOG.error("Failure data is: " + xn.toString());
+            LOG.error("Failure data is: {}", xn.toString());
             return false;
         }
     }

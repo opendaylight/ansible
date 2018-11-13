@@ -3,7 +3,7 @@ module ansible-config {
     namespace "urn:opendaylight:ansible:config";
     prefix "ansible-config";
 
-    import ietf-yang-types { prefix yang; }
+    import ietf-yang-types { prefix "yang"; revision-date 2013-07-15; }
 
     description "This YANG module defines ansible configuration.";
 
