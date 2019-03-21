@@ -70,7 +70,7 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
                     <instructions>
                         <!-- We purposely don't export any packages to avoid any dependencies
                              on this bundle and prevent @Singleton annotated classes from being
-                             accidently included in another bundle's blueprint XML  -->
+                             accidentally included in another bundle's blueprint XML  -->
                         <Export-Package/>
                     </instructions>
                 </configuration>
