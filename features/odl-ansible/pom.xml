@@ -28,14 +28,14 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
             <dependency>
                 <groupId>org.opendaylight.controller</groupId>
                 <artifactId>mdsal-artifacts</artifactId>
-                <version>1.8.1-SNAPSHOT</version>
+                <version>1.8.3-SNAPSHOT</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
             <dependency>
                 <groupId>org.opendaylight.mdsal.model</groupId>
                 <artifactId>mdsal-model-artifacts</artifactId>
-                <version>0.13.1-SNAPSHOT</version>
+                <version>0.13.3-SNAPSHOT</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
@@ -71,14 +71,14 @@ and is available at http://www.eclipse.org/legal/epl-v10.html
         <dependency>
             <groupId>org.opendaylight.genius</groupId>
             <artifactId>odl-genius</artifactId>
-            <version>0.5.1-SNAPSHOT</version>
+            <version>0.5.3-SNAPSHOT</version>
             <type>xml</type>
             <classifier>features</classifier>
         </dependency>
         <dependency>
             <groupId>org.opendaylight.netconf</groupId>
             <artifactId>odl-restconf</artifactId>
-            <version>1.8.1-SNAPSHOT</version>
+            <version>1.8.3-SNAPSHOT</version>
             <type>xml</type>
             <classifier>features</classifier>
         </dependency>
